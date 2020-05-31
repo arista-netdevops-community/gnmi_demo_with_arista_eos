@@ -557,6 +557,8 @@ SupportedEncoding: ASCII
 
 #### Subscribe RPC
 
+Request to the target to stream values for a path
+
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state'
 ```
@@ -608,6 +610,22 @@ SupportedEncoding: ASCII
 </details>
 
 ```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/config'
+```
+<details><summary>click me to see the output</summary>
+<p>
+
+```
+[2020-05-31T23:02:35.055278732Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/config/enabled = true
+[2020-05-31T23:02:35.055824489Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/config/neighbor-address = 10.10.10.5
+[2020-05-31T23:02:35.063057098Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/config/peer-as = 65003
+[2020-05-31T23:02:35.05528639Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/config/route-flap-damping = false
+[2020-05-31T23:02:35.055282396Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/config/send-community = NONE
+```
+</p>
+</details>
+
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/interfaces/interface[name=Ethernet24]/state/counters'
 ```
 <details><summary>click me to see the output</summary>
@@ -639,6 +657,7 @@ SupportedEncoding: ASCII
 
 #### Get RPC
 
+Retrieve a snapshot for a path 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista get '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 ```
@@ -1011,9 +1030,7 @@ SupportedEncoding: ASCII
 
 ###### interface admin status
 
-"enabled" is a leaf defined in the openconfig-interfaces.yang file.  
-It is a boolean. Its default value is true.  
-It is the configured state of the interface.  
+"enabled" is a leaf defined in the openconfig-interfaces.yang file. It is a boolean. Its default value is true. It is the configured state of the interface.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'false'
