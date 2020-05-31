@@ -12,15 +12,13 @@
 [pyangbind](#pyangbind)   
 &nbsp;&nbsp;&nbsp;&nbsp;[About pyangbind](#about-pyangbind)   
 &nbsp;&nbsp;&nbsp;&nbsp;[pyang installation](#pyang-installation)   
-&nbsp;&nbsp;&nbsp;&nbsp;[converts a YANG module into a Python module](#converts-a-yang-module-into-a-python-module). 
+&nbsp;&nbsp;&nbsp;&nbsp;[converts a YANG module into a Python module](#converts-a-yang-module-into-a-python-module)        
 &nbsp;&nbsp;&nbsp;&nbsp;[Use the python module to generate data](#use-the-python-module-to-generate-data)   
-[gNMI](#gNMI)   
+[gNMI](#gnmi)   
 &nbsp;&nbsp;&nbsp;&nbsp;[requirements on Arista devices](#requirements-on-arista-devices)   
-&nbsp;&nbsp;&nbsp;&nbsp;[install the gnmi command-line client](#install-the-gnmi-command-line-client)   
+&nbsp;&nbsp;&nbsp;&nbsp;[install the gNMI command-line client](#install-the-gnmi-command-line-client)   
 &nbsp;&nbsp;&nbsp;&nbsp;[interact with Arista devices using gNMI](#interact-with-arista-devices-using-gnmi)     
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Capalities](capabilities)    
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Capabilities](capabilities)    
 
 # About this repository 
 
@@ -403,7 +401,7 @@ management api gnmi
      ip access-group GNMI
 ```
 
-## install the gnmi command-line client 
+## install the gNMI command-line client 
 
 install Go
 ```
@@ -555,6 +553,7 @@ SupportedEncoding: ASCII
 </details>
 
 #### Subscribe to a stream of particular paths
+
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state'
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state'
 ./gnmi -addr 10.83.28.190:6030 -username arista -password arista subscribe '/interfaces/interface[name=Ethernet24]/state/counters'
