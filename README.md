@@ -5,8 +5,22 @@
 [About this repository](#about-this-repository)   
 [Data models on Arista EOS](#data-models-on-arista-eos)   
 [pyang](#pyang)   
+&nbsp;&nbsp;&nbsp;&nbsp;[About pyang](#about-pyang)   
+&nbsp;&nbsp;&nbsp;&nbsp;[yang modules validation](#yang-modules-validation)   
+&nbsp;&nbsp;&nbsp;&nbsp;[convert a YANG module into an equivalent YIN module](#convert-a-yang-module-into-an-equivalent-yin-module)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Generate a tree representation of YANG modules for quick visualization](#generate-a-tree-representation-of-yang-modules-for-quick-visualization)   
 [pyangbind](#pyangbind)   
+&nbsp;&nbsp;&nbsp;&nbsp;[About pyangbind](#about-pyangbind)   
+&nbsp;&nbsp;&nbsp;&nbsp;[pyang installation](#pyang-installation)   
+&nbsp;&nbsp;&nbsp;&nbsp;[converts a YANG module into a Python module](#converts-a-yang-module-into-a-python-module). 
+&nbsp;&nbsp;&nbsp;&nbsp;[Use the python module to generate data](#use-the-python-module-to-generate-data)   
 [gNMI](#gNMI)   
+&nbsp;&nbsp;&nbsp;&nbsp;[requirements on Arista devices](#requirements-on-arista-devices)   
+&nbsp;&nbsp;&nbsp;&nbsp;[install the gnmi command-line client](#install-the-gnmi-command-line-client)   
+&nbsp;&nbsp;&nbsp;&nbsp;[interact with Arista devices using gNMI](#interact-with-arista-devices-using-gnmi)     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Capalities](capabilities)    
+
+
 
 # About this repository 
 
@@ -79,7 +93,7 @@ pyang openconfig-bgp.yang
 pyang openconfig-interfaces.yang 
 ```
 
-## convert YANG modules into equivalent YIN module
+## convert a YANG module into an equivalent YIN module
 
 A YANG module can be translated into an XML syntax called YIN. The translated module is called a YIN module. The YANG and YIN formats contain equivalent information using different notations: YIN is YANG in XML. A YANG module can be translated into YIN syntax without losing any information.  
 
@@ -300,7 +314,7 @@ pyang==2.2.1
 pyangbind==0.8.1
 ```
 
-## converts YANG module into a Python module
+## converts a YANG module into a Python module
 
 Example with the yang module openconfig-bgp.yang 
 ```
@@ -406,10 +420,13 @@ gnmi
 ./gnmi --help
 ```
 
-### use the following RPC: capabilites, get, subscribe, update, replace, and delete.
+### interact with Arista devices using gNMI 
 
+Lets use the following RPC: capabilites, get, subscribe, update, replace, and delete.
 
-#### Retrieve the set of capabilities supported by the target. 
+#### Capabilities 
+
+Retrieve the set of capabilities supported by the target. 
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista capabilities
