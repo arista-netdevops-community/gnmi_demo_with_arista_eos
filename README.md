@@ -409,11 +409,135 @@ gnmi
 ### use the following RPC: capabilites, get, subscribe, update, replace, and delete.
 
 
+#### Retrieve the set of capabilities supported by the target. 
 
-Retrieve the set of capabilities supported by the target. 
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista capabilities
+```
+<details><summary>click me to see the output</summary>
+<p>
 
-Subscribe to a stream of particular paths
+```
+Version: 0.7.0
+SupportedModel: name:"openconfig-ospf-types" organization:"OpenConfig working group" version:"0.1.3" 
+SupportedModel: name:"openconfig-types" organization:"OpenConfig working group" version:"0.5.1" 
+SupportedModel: name:"arista-lldp-augments" organization:"Arista Networks, Inc." 
+SupportedModel: name:"openconfig-lldp" organization:"OpenConfig working group" version:"0.2.1" 
+SupportedModel: name:"openconfig-mpls-types" organization:"OpenConfig working group" version:"3.0.1" 
+SupportedModel: name:"arista-rpol-augments" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-isis-augments" organization:"Arista Networks, Inc." 
+SupportedModel: name:"openconfig-system-logging" organization:"OpenConfig working group" version:"0.3.1" 
+SupportedModel: name:"openconfig-vlan" organization:"OpenConfig working group" version:"3.0.2" 
+SupportedModel: name:"openconfig-bgp" organization:"OpenConfig working group" version:"5.0.2" 
+SupportedModel: name:"openconfig-mpls-sr" organization:"OpenConfig working group" version:"3.0.1" 
+SupportedModel: name:"openconfig-ospfv2" organization:"OpenConfig working group" version:"0.1.3" 
+SupportedModel: name:"openconfig-aft-types" organization:"OpenConfig Working Group" version:"0.3.2" 
+SupportedModel: name:"openconfig-network-instance-types" organization:"OpenConfig working group" version:"0.8.2" 
+SupportedModel: name:"openconfig-if-ip" organization:"OpenConfig working group" version:"2.3.1" 
+SupportedModel: name:"arista-bgp-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-vlan-deviations" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-aaa-types" organization:"OpenConfig working group" version:"0.4.1" 
+SupportedModel: name:"vlan-translation" organization:"Arista Networks" 
+SupportedModel: name:"arista-gnoi-cert" organization:"Arista Networks, Inc." 
+SupportedModel: name:"openconfig-system-terminal" organization:"OpenConfig working group" version:"0.3.1" 
+SupportedModel: name:"ietf-interfaces" organization:"IETF NETMOD (Network Modeling) Working Group" 
+SupportedModel: name:"arista-lldp-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-bfd-augments" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-netinst-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-exp-eos-qos-acl-config" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-mpls" organization:"OpenConfig working group" version:"3.0.1" 
+SupportedModel: name:"arista-pim-augments" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-intf-augments" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-system-management" organization:"OpenConfig working group" version:"0.1.2" 
+SupportedModel: name:"openconfig-platform-fan" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"openconfig-mpls-ldp" organization:"OpenConfig working group" version:"3.0.1" 
+SupportedModel: name:"openconfig-platform-psu" organization:"OpenConfig working group" version:"0.2.1" 
+SupportedModel: name:"openconfig-platform-linecard" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"openconfig-system" organization:"OpenConfig working group" version:"0.6.1" 
+SupportedModel: name:"openconfig-policy-forwarding" organization:"OpenConfig working group" version:"0.2.1" 
+SupportedModel: name:"openconfig-igmp" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"arista-exp-eos-mlag" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-bfd-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-system-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-lacp-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"openconfig-alarm-types" organization:"OpenConfig working group" version:"0.2.1" 
+SupportedModel: name:"openconfig-bgp-policy" organization:"OpenConfig working group" version:"5.0.2" 
+SupportedModel: name:"openconfig-isis-lsdb-types" organization:"OpenConfig working group" version:"0.4.2" 
+SupportedModel: name:"arista-lacp-augments" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-exp-eos-multicast" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-isis-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"openconfig-aft" organization:"OpenConfig working group" version:"0.3.2" 
+SupportedModel: name:"openconfig-yang-types" organization:"OpenConfig working group" version:"0.2.1" 
+SupportedModel: name:"ietf-netconf-monitoring" organization:"IETF NETCONF (Network Configuration) Working Group" 
+SupportedModel: name:"openconfig-if-ethernet" organization:"OpenConfig working group" version:"2.6.2" 
+SupportedModel: name:"openconfig-platform-types" organization:"OpenConfig working group" version:"0.10.1" 
+SupportedModel: name:"openconfig-lacp" organization:"OpenConfig working group" version:"1.1.1" 
+SupportedModel: name:"openconfig-vlan-types" organization:"OpenConfig working group" version:"3.0.1" 
+SupportedModel: name:"openconfig-bgp-types" organization:"OpenConfig working group" version:"5.0.2" 
+SupportedModel: name:"openconfig-if-aggregate" organization:"OpenConfig working group" version:"2.3.2" 
+SupportedModel: name:"openconfig-pim" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"openconfig-qos" organization:"OpenConfig working group" version:"0.2.1" 
+SupportedModel: name:"openconfig-procmon" organization:"OpenConfig working group" version:"0.3.1" 
+SupportedModel: name:"openconfig-ospf-policy" organization:"OpenConfig working group" version:"0.1.3" 
+SupportedModel: name:"arista-relay-agent-deviations" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-alarms" organization:"OpenConfig working group" version:"0.3.1" 
+SupportedModel: name:"arista-rpol-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-system-augments" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-exp-eos-vxlan" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-rpc-netconf" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-exp-eos-igmpsnooping" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-intf-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-vlan-augments" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-isis-types" organization:"OpenConfig working group" version:"0.4.2" 
+SupportedModel: name:"openconfig-network-instance" organization:"OpenConfig working group" version:"0.11.1" 
+SupportedModel: name:"openconfig-isis" organization:"OpenConfig working group" version:"0.4.2" 
+SupportedModel: name:"openconfig-bfd" organization:"OpenConfig working group" version:"0.1.0" 
+SupportedModel: name:"arista-srte-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"iana-if-type" organization:"IANA" 
+SupportedModel: name:"openconfig-if-types" organization:"OpenConfig working group" version:"0.2.1" 
+SupportedModel: name:"openconfig-packet-match-types" organization:"OpenConfig working group" version:"1.0.2" 
+SupportedModel: name:"openconfig-qos-types" organization:"OpenConfig working group" version:"0.2.1" 
+SupportedModel: name:"openconfig-policy-types" organization:"OpenConfig working group" version:"3.1.1" 
+SupportedModel: name:"arista-exp-eos" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-interfaces" organization:"OpenConfig working group" version:"2.4.1" 
+SupportedModel: name:"openconfig-network-instance-l3" organization:"OpenConfig working group" version:"0.11.1" 
+SupportedModel: name:"openconfig-routing-policy" organization:"OpenConfig working group" version:"3.1.1" 
+SupportedModel: name:"arista-mpls-augments" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"ietf-yang-types" organization:"IETF NETMOD (NETCONF Data Modeling Language) Working Group" 
+SupportedModel: name:"openconfig-packet-match" organization:"OpenConfig working group" version:"1.1.1" 
+SupportedModel: name:"openconfig-local-routing" organization:"OpenConfig working group" version:"1.0.2" 
+SupportedModel: name:"ietf-netconf" organization:"IETF NETCONF (Network Configuration) Working Group" 
+SupportedModel: name:"openconfig-platform" organization:"OpenConfig working group" version:"0.12.1" 
+SupportedModel: name:"arista-acl-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"arista-exp-eos-qos" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"arista-mpls-deviations" organization:"Arista Networks, Inc." 
+SupportedModel: name:"openconfig-acl" organization:"OpenConfig working group" version:"1.0.2" 
+SupportedModel: name:"openconfig-segment-routing" organization:"OpenConfig working group" version:"0.0.4" 
+SupportedModel: name:"arista-exp-eos-qos-config" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-aaa" organization:"OpenConfig working group" version:"0.4.1" 
+SupportedModel: name:"openconfig-pim-types" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"arista-exp-eos-vxlan-config" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"ietf-inet-types" organization:"IETF NETMOD (NETCONF Data Modeling Language) Working Group" 
+SupportedModel: name:"openconfig-hercules-interfaces" organization:"OpenConfig Hercules Working Group" version:"0.2.0" 
+SupportedModel: name:"arista-exp-eos-varp" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-mpls-rsvp" organization:"OpenConfig working group" version:"3.0.1" 
+SupportedModel: name:"openconfig-pf-srte" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"openconfig-extensions" organization:"OpenConfig working group" 
+SupportedModel: name:"openconfig-igmp-types" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"openconfig-relay-agent" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"openconfig-if-tunnel" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"openconfig-inet-types" organization:"OpenConfig working group" version:"0.3.2" 
+SupportedModel: name:"arista-eos-types" organization:"Arista Networks <http://arista.com/>" 
+SupportedModel: name:"openconfig-lldp-types" organization:"OpenConfig working group" version:"0.1.1" 
+SupportedModel: name:"arista-local-routing-deviations" organization:"Arista Networks, Inc." 
+SupportedEncoding: JSON
+SupportedEncoding: JSON_IETF
+SupportedEncoding: ASCII
+```
+</p>
+</details>
+
+#### Subscribe to a stream of particular paths
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state'
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state'
 ./gnmi -addr 10.83.28.190:6030 -username arista -password arista subscribe '/interfaces/interface[name=Ethernet24]/state/counters'
