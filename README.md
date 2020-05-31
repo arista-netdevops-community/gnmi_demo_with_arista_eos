@@ -589,6 +589,24 @@ SupportedEncoding: ASCII
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state'
 ```
+<details><summary>click me to see the output</summary>
+<p>
+
+
+```
+[2020-05-31T22:21:31.711775449Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/dynamically-configured = false
+[2020-05-31T22:21:31.711778386Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/enabled = true
+[2020-05-31T22:21:31.742386216Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/established-transitions = 1
+[2020-05-31T22:21:31.74248292Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/last-established = 159096348429
+[2020-05-31T22:21:31.712592538Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/neighbor-address = 10.10.10.5
+[2020-05-31T22:21:31.730382272Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/peer-as = 65003
+[2020-05-31T22:21:31.711782096Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/route-flap-damping = false
+[2020-05-31T22:21:31.711786244Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/send-community = NONE
+[2020-05-31T22:21:31.742155428Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/session-state = ESTABLISHED
+```
+</p>
+</details>
+
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/interfaces/interface[name=Ethernet24]/state/counters'
 ```
@@ -596,7 +614,25 @@ SupportedEncoding: ASCII
 <p>
 
 ```
-
+[2020-05-31T22:21:31.317592414Z] /interfaces/interface[name=Ethernet24]/state/counters/in-broadcast-pkts = 0
+[2020-05-31T22:21:31.317572819Z] /interfaces/interface[name=Ethernet24]/state/counters/in-discards = 0
+[2020-05-31T22:21:31.317667791Z] /interfaces/interface[name=Ethernet24]/state/counters/in-errors = 0
+[2020-05-31T22:29:55.324957018Z] /interfaces/interface[name=Ethernet24]/state/counters/in-multicast-pkts = 19
+[2020-05-31T22:29:55.324938409Z] /interfaces/interface[name=Ethernet24]/state/counters/in-octets = 6637
+[2020-05-31T22:29:23.307923971Z] /interfaces/interface[name=Ethernet24]/state/counters/in-unicast-pkts = 28
+[2020-05-31T22:21:31.317558268Z] /interfaces/interface[name=Ethernet24]/state/counters/out-broadcast-pkts = 1
+[2020-05-31T22:21:31.317641085Z] /interfaces/interface[name=Ethernet24]/state/counters/out-discards = 0
+[2020-05-31T22:21:31.317650693Z] /interfaces/interface[name=Ethernet24]/state/counters/out-errors = 0
+[2020-05-31T22:29:53.324273922Z] /interfaces/interface[name=Ethernet24]/state/counters/out-multicast-pkts = 18
+[2020-05-31T22:29:53.324253853Z] /interfaces/interface[name=Ethernet24]/state/counters/out-octets = 5865
+[2020-05-31T22:29:23.307958857Z] /interfaces/interface[name=Ethernet24]/state/counters/out-unicast-pkts = 19
+[2020-05-31T22:30:23.3394854Z] /interfaces/interface[name=Ethernet24]/state/counters/out-multicast-pkts = 19
+[2020-05-31T22:30:23.339507569Z] /interfaces/interface[name=Ethernet24]/state/counters/in-unicast-pkts = 30
+[2020-05-31T22:30:23.339558179Z] /interfaces/interface[name=Ethernet24]/state/counters/in-octets = 6796
+[2020-05-31T22:30:23.340718713Z] /interfaces/interface[name=Ethernet24]/state/counters/out-octets = 6250
+[2020-05-31T22:30:23.340740613Z] /interfaces/interface[name=Ethernet24]/state/counters/out-unicast-pkts = 21
+[2020-05-31T22:30:25.34256155Z] /interfaces/interface[name=Ethernet24]/state/counters/in-octets = 7022
+[2020-05-31T22:30:25.342580956Z] /interfaces/interface[name=Ethernet24]/state/counters/in-multicast-pkts = 20
 ```
 </p>
 </details>
@@ -606,6 +642,349 @@ SupportedEncoding: ASCII
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista get '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 ```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+
+/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors:
+{
+  "openconfig-network-instance:neighbor": [
+    {
+      "afi-safis": {
+        "afi-safi": [
+          {
+            "add-paths": {
+              "config": {
+                "send": false
+              },
+              "state": {
+                "send": false
+              }
+            },
+            "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST",
+            "apply-policy": {
+              "config": {
+                "default-export-policy": "REJECT_ROUTE",
+                "default-import-policy": "REJECT_ROUTE"
+              },
+              "state": {
+                "default-export-policy": "REJECT_ROUTE",
+                "default-import-policy": "REJECT_ROUTE"
+              }
+            },
+            "config": {
+              "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+            },
+            "graceful-restart": {
+              "config": {},
+              "state": {}
+            },
+            "state": {
+              "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+            }
+          },
+          {
+            "add-paths": {
+              "config": {
+                "send": false
+              },
+              "state": {
+                "send": false
+              }
+            },
+            "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST",
+            "apply-policy": {
+              "config": {
+                "default-export-policy": "REJECT_ROUTE",
+                "default-import-policy": "REJECT_ROUTE"
+              },
+              "state": {
+                "default-export-policy": "REJECT_ROUTE",
+                "default-import-policy": "REJECT_ROUTE"
+              }
+            },
+            "config": {
+              "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+            },
+            "graceful-restart": {
+              "config": {},
+              "state": {}
+            },
+            "state": {
+              "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+            }
+          }
+        ]
+      },
+      "apply-policy": {
+        "config": {
+          "default-export-policy": "REJECT_ROUTE",
+          "default-import-policy": "REJECT_ROUTE"
+        },
+        "state": {
+          "default-export-policy": "REJECT_ROUTE",
+          "default-import-policy": "REJECT_ROUTE"
+        }
+      },
+      "as-path-options": {
+        "config": {
+          "disable-peer-as-filter": false,
+          "replace-peer-as": false
+        },
+        "state": {
+          "disable-peer-as-filter": false,
+          "replace-peer-as": false
+        }
+      },
+      "config": {
+        "enabled": true,
+        "neighbor-address": "10.10.10.0",
+        "peer-as": 65001,
+        "route-flap-damping": false,
+        "send-community": "NONE"
+      },
+      "ebgp-multihop": {
+        "config": {
+          "enabled": false,
+          "multihop-ttl": 0
+        },
+        "state": {
+          "enabled": false,
+          "multihop-ttl": 0
+        }
+      },
+      "error-handling": {
+        "config": {
+          "treat-as-withdraw": false
+        },
+        "state": {
+          "treat-as-withdraw": false
+        }
+      },
+      "neighbor-address": "10.10.10.0",
+      "route-reflector": {
+        "config": {},
+        "state": {}
+      },
+      "state": {
+        "dynamically-configured": false,
+        "enabled": true,
+        "established-transitions": "1",
+        "last-established": "159096348629",
+        "neighbor-address": "10.10.10.0",
+        "peer-as": 65001,
+        "route-flap-damping": false,
+        "send-community": "NONE",
+        "session-state": "ESTABLISHED"
+      },
+      "timers": {
+        "config": {
+          "connect-retry": "30.0",
+          "minimum-advertisement-interval": "30.0"
+        },
+        "state": {
+          "connect-retry": "30.0",
+          "minimum-advertisement-interval": "30.0"
+        }
+      },
+      "transport": {
+        "config": {
+          "mtu-discovery": true
+        },
+        "state": {
+          "mtu-discovery": true,
+          "remote-address": "10.10.10.0",
+          "remote-port": 0
+        }
+      },
+      "use-multiple-paths": {
+        "config": {
+          "enabled": false
+        },
+        "ebgp": {
+          "config": {
+            "allow-multiple-as": false
+          },
+          "state": {
+            "allow-multiple-as": false
+          }
+        },
+        "state": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "afi-safis": {
+        "afi-safi": [
+          {
+            "add-paths": {
+              "config": {
+                "send": false
+              },
+              "state": {
+                "send": false
+              }
+            },
+            "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST",
+            "apply-policy": {
+              "config": {
+                "default-export-policy": "REJECT_ROUTE",
+                "default-import-policy": "REJECT_ROUTE"
+              },
+              "state": {
+                "default-export-policy": "REJECT_ROUTE",
+                "default-import-policy": "REJECT_ROUTE"
+              }
+            },
+            "config": {
+              "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+            },
+            "graceful-restart": {
+              "config": {},
+              "state": {}
+            },
+            "state": {
+              "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+            }
+          },
+          {
+            "add-paths": {
+              "config": {
+                "send": false
+              },
+              "state": {
+                "send": false
+              }
+            },
+            "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST",
+            "apply-policy": {
+              "config": {
+                "default-export-policy": "REJECT_ROUTE",
+                "default-import-policy": "REJECT_ROUTE"
+              },
+              "state": {
+                "default-export-policy": "REJECT_ROUTE",
+                "default-import-policy": "REJECT_ROUTE"
+              }
+            },
+            "config": {
+              "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+            },
+            "graceful-restart": {
+              "config": {},
+              "state": {}
+            },
+            "state": {
+              "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+            }
+          }
+        ]
+      },
+      "apply-policy": {
+        "config": {
+          "default-export-policy": "REJECT_ROUTE",
+          "default-import-policy": "REJECT_ROUTE"
+        },
+        "state": {
+          "default-export-policy": "REJECT_ROUTE",
+          "default-import-policy": "REJECT_ROUTE"
+        }
+      },
+      "as-path-options": {
+        "config": {
+          "disable-peer-as-filter": false,
+          "replace-peer-as": false
+        },
+        "state": {
+          "disable-peer-as-filter": false,
+          "replace-peer-as": false
+        }
+      },
+      "config": {
+        "enabled": true,
+        "neighbor-address": "10.10.10.5",
+        "peer-as": 65003,
+        "route-flap-damping": false,
+        "send-community": "NONE"
+      },
+      "ebgp-multihop": {
+        "config": {
+          "enabled": false,
+          "multihop-ttl": 0
+        },
+        "state": {
+          "enabled": false,
+          "multihop-ttl": 0
+        }
+      },
+      "error-handling": {
+        "config": {
+          "treat-as-withdraw": false
+        },
+        "state": {
+          "treat-as-withdraw": false
+        }
+      },
+      "neighbor-address": "10.10.10.5",
+      "route-reflector": {
+        "config": {},
+        "state": {}
+      },
+      "state": {
+        "dynamically-configured": false,
+        "enabled": true,
+        "established-transitions": "1",
+        "last-established": "159096348429",
+        "neighbor-address": "10.10.10.5",
+        "peer-as": 65003,
+        "route-flap-damping": false,
+        "send-community": "NONE",
+        "session-state": "ESTABLISHED"
+      },
+      "timers": {
+        "config": {
+          "connect-retry": "30.0",
+          "minimum-advertisement-interval": "30.0"
+        },
+        "state": {
+          "connect-retry": "30.0",
+          "minimum-advertisement-interval": "30.0"
+        }
+      },
+      "transport": {
+        "config": {
+          "mtu-discovery": true
+        },
+        "state": {
+          "mtu-discovery": true,
+          "remote-address": "10.10.10.5",
+          "remote-port": 0
+        }
+      },
+      "use-multiple-paths": {
+        "config": {
+          "enabled": false
+        },
+        "ebgp": {
+          "config": {
+            "allow-multiple-as": false
+          },
+          "state": {
+            "allow-multiple-as": false
+          }
+        },
+        "state": {
+          "enabled": false
+        }
+      }
+    }
+  ]
+}
+```
+</p>
+</details>
 
 #### Set RPC
 
