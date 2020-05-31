@@ -1003,23 +1003,21 @@ SupportedEncoding: ASCII
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
 ```
-
-##### BGP neighbor 
-
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}, "neighbor-address": "10.10.100.43"}'
 ```
 
 ##### update an existing element 
 
-###### shutdown an interface 
+###### interface admin status
+
+"enabled" is a leaf defined in the openconfig-interfaces.yang file.  
+It is a boolean. Its default value is true.  
+It is the configured state of the interface.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'false'
 ```
-
-###### no shutdown an interface 
-
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'true'
 ```
