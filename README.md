@@ -14,7 +14,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;[pyang installation](#pyang-installation)   
 &nbsp;&nbsp;&nbsp;&nbsp;[converts a YANG module into a Python module](#converts-a-yang-module-into-a-python-module)        
 &nbsp;&nbsp;&nbsp;&nbsp;[Use the python module to generate data](#use-the-python-module-to-generate-data)   
-[gNMI (gRPC Network Management Interface)](gnmi-grpc-network-management-interface)   
+[gNMI (gRPC Network Management Interface)](#gnmi-grpc-network-management-interface)   
 &nbsp;&nbsp;&nbsp;&nbsp;[requirements on Arista devices](#requirements-on-arista-devices)   
 &nbsp;&nbsp;&nbsp;&nbsp;[install the gNMI command-line client](#install-the-gnmi-command-line-client)   
 &nbsp;&nbsp;&nbsp;&nbsp;[interact with Arista devices using gNMI](#interact-with-arista-devices-using-gnmi)    
@@ -1006,6 +1006,8 @@ Retrieve a snapshot for a path
 </details>
 
 #### Set RPC
+
+States modifications.  
 
 `replace`, `update`, `delete` fields. 
 
