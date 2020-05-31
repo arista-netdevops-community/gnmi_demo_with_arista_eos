@@ -24,9 +24,9 @@
             {
                 "config": {
                     "peer-as": 65002,
-                    "peer-group-name": "ABC"
+                    "peer-group-name": "XYZ"
                 },
-                "peer-group-name": "ABC"
+                "peer-group-name": "XYZ"
             }
         ]
     }
