@@ -17,11 +17,11 @@
 [gNMI (gRPC Network Management Interface)](gnmi-grpc-network-management-interface)   
 &nbsp;&nbsp;&nbsp;&nbsp;[requirements on Arista devices](#requirements-on-arista-devices)   
 &nbsp;&nbsp;&nbsp;&nbsp;[install the gNMI command-line client](#install-the-gnmi-command-line-client)   
-&nbsp;&nbsp;&nbsp;&nbsp;[interact with Arista devices using gNMI](#interact-with-arista-devices-using-gnmi)     
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Capabilities](capabilities)    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Subscribe](subscribe)    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Get](get)    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Set](set)    
+&nbsp;&nbsp;&nbsp;&nbsp;[interact with Arista devices using gNMI](#interact-with-arista-devices-using-gnmi)    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Capabilities RPC](capabilities-rpc)    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Subscribe RPC](subscribe-rpc)    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Get RPC](get-rpc)    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Set RPC](set-rpc)    
 
 # About this repository 
 
@@ -425,7 +425,7 @@ gnmi
 
 Lets use the following RPC: capabilites, get, subscribe, update, replace, and delete.
 
-#### Capabilities 
+#### Capabilities RPC
 
 Retrieve the set of capabilities supported by the target. 
 
@@ -555,17 +555,17 @@ SupportedEncoding: ASCII
 </p>
 </details>
 
-#### Subscribe 
+#### Subscribe RPC
 
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state'
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state'
 ./gnmi -addr 10.83.28.190:6030 -username arista -password arista subscribe '/interfaces/interface[name=Ethernet24]/state/counters'
 
-#### Get
+#### Get RPC
 
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista get '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 
-#### Set
+#### Set RPC
 
 ##### Create a new element 
 
