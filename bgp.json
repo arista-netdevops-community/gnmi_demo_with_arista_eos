@@ -1,0 +1,33 @@
+{
+    "neighbors": {
+        "neighbor": [
+            {
+                "config": {
+                    "enabled": true,
+                    "neighbor-address": "10.10.10.154",
+                    "peer-group": "XYZ"
+                },
+                "neighbor-address": "10.10.10.154"
+            },
+            {
+                "config": {
+                    "enabled": true,
+                    "neighbor-address": "10.10.10.157",
+                    "peer-group": "XYZ"
+                },
+                "neighbor-address": "10.10.10.157"
+            }
+        ]
+    },
+    "peer-groups": {
+        "peer-group": [
+            {
+                "config": {
+                    "peer-as": 65002,
+                    "peer-group-name": "ABC"
+                },
+                "peer-group-name": "ABC"
+            }
+        ]
+    }
+}
