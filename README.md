@@ -28,8 +28,7 @@
 We will use pyang, pyangbind, and gNMI.  
 
 We will interact with Arista EOS devices using gNMI.   
-We will use a gnmi command-line client and the following RPC: capabilites, get, subscribe, update, replace, and delete. 
-
+We will use a gnmi command-line client and the following RPC: capabilites, get, subscribe, set. 
 # Data models on Arista EOS
 
 They are published on this repository  https://github.com/aristanetworks/yang 
@@ -555,39 +554,109 @@ SupportedEncoding: ASCII
 </p>
 </details>
 
+
 #### Subscribe RPC
 
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state'
+```
+<details><summary>click me to see the output</summary>
+<p>
+
+```
+[2020-05-31T22:21:31.707253093Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/dynamically-configured = false
+[2020-05-31T22:21:31.707256177Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/enabled = true
+[2020-05-31T22:21:31.741369402Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/established-transitions = 1
+[2020-05-31T22:21:31.741756411Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/last-established = 159096348629
+[2020-05-31T22:21:31.711484298Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/neighbor-address = 10.10.10.0
+[2020-05-31T22:21:31.718742166Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/peer-as = 65001
+[2020-05-31T22:21:31.70725986Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/route-flap-damping = false
+[2020-05-31T22:21:31.707263783Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/send-community = NONE
+[2020-05-31T22:21:31.741504683Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/state/session-state = ESTABLISHED
+[2020-05-31T22:21:31.711775449Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/dynamically-configured = false
+[2020-05-31T22:21:31.711778386Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/enabled = true
+[2020-05-31T22:21:31.742386216Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/established-transitions = 1
+[2020-05-31T22:21:31.74248292Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/last-established = 159096348429
+[2020-05-31T22:21:31.712592538Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/neighbor-address = 10.10.10.5
+[2020-05-31T22:21:31.730382272Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/peer-as = 65003
+[2020-05-31T22:21:31.711782096Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/route-flap-damping = false
+[2020-05-31T22:21:31.711786244Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/send-community = NONE
+[2020-05-31T22:21:31.742155428Z] /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state/session-state = ESTABLISHED
+```
+</p>
+</details>
+
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state'
-./gnmi -addr 10.83.28.190:6030 -username arista -password arista subscribe '/interfaces/interface[name=Ethernet24]/state/counters'
+```
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista subscribe '/interfaces/interface[name=Ethernet24]/state/counters'
+```
+<details><summary>click me to see the output</summary>
+<p>
+
+```
+
+```
+</p>
+</details>
 
 #### Get RPC
 
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista get '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
+```
 
 #### Set RPC
 
+`replace`, `update`, `delete` fields. 
+
 ##### Create a new element 
 
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
+```
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ", "local-as": 114}}'
+```
 
 ##### replace an element
+
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}, "neighbor-address": "10.10.100.43"}'
+```
 
 ##### update a leaf
+
+```
 ./gnmi -addr 10.83.28.190:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet1]/config/enabled' 'false'
+```
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet1]/config/enabled' 'true'
+```
 
 ##### update an existing element
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' '110'
+```
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-as": 110}}'
+```
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group' 'XYZ'
+```
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-group": "XYZ","peer-as": 143}}'
+```
 
 ##### delete
+
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group'
+```
 
-##### file
+##### using a JSON file
+
+```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/bgp.json
-
+```
