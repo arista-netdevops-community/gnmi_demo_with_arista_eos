@@ -82,7 +82,7 @@ ls *.yin
 
 ```
 yang_modules pyang -f tree openconfig-interfaces.yang                                        
-
+```
 <details><summary>click me to see the output structure</summary>
 <p>
 
@@ -176,14 +176,14 @@ module: openconfig-interfaces
 </p>
 </details>
 
+
 ```
 yang_modules pyang openconfig-interfaces.yang -f tree --tree-path=/interfaces/interface/state       
-
+```
 <details><summary>click me to see the output structure</summary>
 <p>
 
 ```
-
 module: openconfig-interfaces
   +--rw interfaces
      +--rw interface* [name]
@@ -224,7 +224,7 @@ module: openconfig-interfaces
 
 ```
 yang_modules pyang openconfig-interfaces.yang -f tree  --tree-depth=4  
-
+```
 <details><summary>click me to see the output structure</summary>
 <p>
 
