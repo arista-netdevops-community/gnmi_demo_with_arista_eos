@@ -71,8 +71,9 @@ pyang openconfig-interfaces.yang
 
 ## convert YANG modules into equivalent YIN module
 
-A YANG module can be translated into an XML syntax called YIN. The translated module is called a YIN module. The YANG and YIN formats contain equivalent information using different notations: YIN is YANG in XML. A YANG module can be translated into YIN syntax without losing any information. Example (openconfig-bgp.yin is the YIN equivalent of openconfig-bgp.yang)
+A YANG module can be translated into an XML syntax called YIN. The translated module is called a YIN module. The YANG and YIN formats contain equivalent information using different notations: YIN is YANG in XML. A YANG module can be translated into YIN syntax without losing any information.  
 
+Example (openconfig-bgp.yin is the YIN equivalent of openconfig-bgp.yang)
 ```
 pyang openconfig-bgp.yang -f yin -o openconfig-bgp.yin
 ls *.yin
@@ -83,7 +84,7 @@ ls *.yin
 ```
 yang_modules pyang -f tree openconfig-interfaces.yang                                        
 ```
-<details><summary>click me to see the output structure</summary>
+<details><summary>click me to see the output</summary>
 <p>
 
 ```
@@ -180,7 +181,7 @@ module: openconfig-interfaces
 ```
 yang_modules pyang openconfig-interfaces.yang -f tree --tree-path=/interfaces/interface/state       
 ```
-<details><summary>click me to see the output structure</summary>
+<details><summary>click me to see the output</summary>
 <p>
 
 ```
@@ -225,7 +226,7 @@ module: openconfig-interfaces
 ```
 yang_modules pyang openconfig-interfaces.yang -f tree  --tree-depth=4  
 ```
-<details><summary>click me to see the output structure</summary>
+<details><summary>click me to see the output</summary>
 <p>
 
 ```
@@ -268,10 +269,104 @@ module: openconfig-interfaces
 
 # pyangbind 
 
-pyangbind is a pyang plugin.  
-It generates Python classes from a YANG module: It converts  YANG modULE into a Python module, such that Python can be used to generate data which conforms with the data model defined in YANG.
+## About pyangbind 
 
+pyangbind is a pyang plugin.  
+It generates Python classes from a YANG module: It converts  YANG module into a Python module, such that Python can be used to generate data which conforms with the data model defined in YANG.
+
+## pyang installation
+
+```
+python -V              
+Python 3.7.7
+```
+pyang installation from pypi 
+```
+$ pip install pyangbind
+```
+```
+pip freeze | grep pyang
+pyang==2.2.1
+pyangbind==0.8.1
+```
+
+## converts YANG module into a Python module
+
+Example with the yang module openconfig-bgp.yang 
+```
+pyang --plugindir $VIRTUAL_ENV/lib/python3.7/site-packages/pyangbind/plugin -f pybind -o oc_bgp.py openconfig-bgp.yang
+```
+We have now a python module oc_bgp.py
+```
+ls | grep oc_bgp.py
+```
+
+## Use the python module to generate data  
+
+```
+Python 3.7.7 (default, Mar 10 2020, 15:43:33) 
+[Clang 11.0.0 (clang-1100.0.33.17)] on darwin
+Type "help", "copyright", "credits" or "license" for more information. 
+>>> 
+>>> from oc_bgp import openconfig_bgp
+>>> from json import dumps
+>>> oc=openconfig_bgp()
+>>> oc.bgp.peer_groups.peer_group.add("OC")
+<pyangbind.lib.yangtypes.YANGDynClass.<locals>.YANGBaseClass object at 0x106e55310>
+>>> oc.bgp.peer_groups.peer_group["OC"].config.local_as=104
+>>> #oc.bgp.peer_groups.peer_group["OC"].config.peer_type="EXTERNAL"
+>>> #oc.bgp.peer_groups.peer_group["OC"].apply_policy.config.import_policy="bgp_in"
+>>> #oc.bgp.peer_groups.peer_group["OC"].apply_policy.config.export_policy="bgp_out"
+>>> oc.bgp.neighbors.neighbor.add("192.168.1.2")
+<pyangbind.lib.yangtypes.YANGDynClass.<locals>.YANGBaseClass object at 0x106e55470>
+>>> oc.bgp.neighbors.neighbor.add("192.168.1.22")
+<pyangbind.lib.yangtypes.YANGDynClass.<locals>.YANGBaseClass object at 0x1074301b0>
+>>> oc.bgp.neighbors.neighbor["192.168.1.2"].config.peer_as="110"
+>>> oc.bgp.neighbors.neighbor["192.168.1.2"].config.peer_group="OC"
+>>> oc.bgp.neighbors.neighbor["192.168.1.22"].config.peer_as="120"
+>>> oc.bgp.neighbors.neighbor["192.168.1.22"].config.peer_group="OC"
+>>> oc.get(filter=True)
+{'bgp': {'neighbors': {'neighbor': OrderedDict([('192.168.1.2', {'neighbor-address': '192.168.1.2', 'config': {'peer-group': 'OC', 'peer-as': 110}}), ('192.168.1.22', {'neighbor-address': '192.168.1.22', 'config': {'peer-group': 'OC', 'peer-as': 120}})])}, 'peer-groups': {'peer-group': OrderedDict([('OC', {'peer-group-name': 'OC', 'config': {'local-as': 104}})])}}}
+>>> dumps(oc.get(filter=True))
+'{"bgp": {"neighbors": {"neighbor": {"192.168.1.2": {"neighbor-address": "192.168.1.2", "config": {"peer-group": "OC", "peer-as": 110}}, "192.168.1.22": {"neighbor-address": "192.168.1.22", "config": {"peer-group": "OC", "peer-as": 120}}}}, "peer-groups": {"peer-group": {"OC": {"peer-group-name": "OC", "config": {"local-as": 104}}}}}}'
+>>> print(dumps(oc.get(filter=True), indent=4))
+{
+    "bgp": {
+        "neighbors": {
+            "neighbor": {
+                "192.168.1.2": {
+                    "neighbor-address": "192.168.1.2",
+                    "config": {
+                        "peer-group": "OC",
+                        "peer-as": 110
+                    }
+                },
+                "192.168.1.22": {
+                    "neighbor-address": "192.168.1.22",
+                    "config": {
+                        "peer-group": "OC",
+                        "peer-as": 120
+                    }
+                }
+            }
+        },
+        "peer-groups": {
+            "peer-group": {
+                "OC": {
+                    "peer-group-name": "OC",
+                    "config": {
+                        "local-as": 104
+                    }
+                }
+            }
+        }
+    }
+}
+>>> 
+```
 # gNMI (gRPC Network Management Interface)
+
+We will use [this gnmi command-line client](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi) and the following RPC: capabilites, get, subscribe, update, replace, and delete.
 
 ## requirements on Arista devices 
 
@@ -284,16 +379,25 @@ management api gnmi
      ip access-group GNMI
 ```
 
-## gnmi command-line client 
-
-We will use [this gnmi command-line client](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi) and the following RPC: capabilites, get, subscribe, update, replace, and delete.
-
+## install the gnmi command-line client 
 
 install Go
-install this gnmi command line client
+```
+go version
+go version go1.14.3 darwin/amd64
+```
 
+install [this gnmi command-line client](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi) 
 ```
-ls -l $HOME/Go/bin                                                           
+ls $HOME/Go/bin | grep gnmi
+gnmi                                                   
 ```
+```
+./gnmi --help
+```
+
+### use the following RPC: capabilites, get, subscribe, update, replace, and delete.
+
+
 
 
