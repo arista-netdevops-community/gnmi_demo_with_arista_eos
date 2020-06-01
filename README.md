@@ -1118,18 +1118,41 @@ switch2#
 ```
 </p>
 </details>
+
 ##### update an existing element 
 
 ###### interface admin status
 
 "enabled" is a leaf defined in the openconfig-interfaces.yang file. It is a boolean. Its default value is true. It is the configured state of the interface. This leaf always exists.   
-
+  
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'false'
 ```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config interfaces ethernet 4
+interface Ethernet4
+   shutdown
+switch2#
+```
+</p>
+</details>
+
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'true'
 ```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config interfaces ethernet 4
+interface Ethernet4
+switch2#
+```
+</p>
+</details>
 
 ###### BGP neighbor  
 
@@ -1151,8 +1174,6 @@ If the BGP neighbor doesnt exist these examples will fail.
 
 ##### delete an existing element
 
-The `delete` field in the `SetRequest` message has the set of paths to be removed from the data tree.  
-
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group'
 ```
@@ -1160,6 +1181,7 @@ The `delete` field in the `SetRequest` message has the set of paths to be remove
 ##### Modify several states 
 
 You can use a JSON file as shown above.  
+
 You can also use all the fields (`delete`, `replace` and `update`) in the `SetRequest` message with several paths in each the field. 
 
 ```
