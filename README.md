@@ -1187,7 +1187,7 @@ If the BGP neighbor element doesnt exist, the request will fail and it wont be c
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-group": "XYZ","peer-as": 143}}'
 ```
 
-##### delete existing elements  
+##### delete an existing element  
 
 The delete field in the SetRequest messaage has a set of paths which are to be removed from the data tree.  
 
@@ -1202,6 +1202,7 @@ This command will send a SetRequest message with 1 path in the delete field.
 You can use a JSON file as shown above.  
 
 You can also all the fields (delete, replace and update) in the SetRequest message, with several paths in each the field.  
+
 
 This command will send a SetRequest message with 2 paths in the delete field.  
 
