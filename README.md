@@ -1053,11 +1053,13 @@ switch2#
 
 ##### Create a new element or update/replace an existing element
 
-New elements could be new BGP neighbors, new BGP groups .... 
-These examples work even if the element doesnt exist. In that case, it will be created.    
-If it already exist then it will be updated.  
+New elements could be new BGP neighbors, new BGP groups ....  
+
 
 ###### Create the BGP element or replace the existing one 
+
+If the element doesnt exist, it will be created.    
+If it already exist then it will be replaced.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}'
@@ -1074,6 +1076,9 @@ switch2#
 </details>
 
 ###### Creeate a new BGP group element or update the existing one
+
+If the element doesnt exist, it will be created.    
+If it already exist then it will be updated.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}'
@@ -1092,6 +1097,9 @@ switch2#
 </details>
 
 ###### Create a new BGP neighbor element or update the existing one
+
+If the element doesnt exist, it will be created.    
+If it already exist then it will be updated.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
@@ -1114,6 +1122,9 @@ switch2#
 
 ###### Create a new BGP neighbor element or replace the existing one
 
+If the element doesnt exist, it will be created.    
+If it already exist then it will be replaced.  
+
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}, "neighbor-address": "10.10.100.43"}'
 ```
@@ -1132,7 +1143,11 @@ switch2#
 </p>
 </details>
 
-###### Create new elements or replace the existing ones using the file [bgp.json](bgp.json)
+###### Use the file [bgp.json](bgp.json) to create new elements or replace the existing ones 
+
+Several elements will be modified.  For each element: 
+- If the element doesnt exist, it will be created.    
+- If it already exist then it will be replaced.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/bgp.json
@@ -1155,13 +1170,10 @@ switch2#
 </p>
 </details>
 
+##### update existing elements BGP neighbor element 
 
-##### update existing elements  
-
-###### BGP neighbor element 
-
-if the BGP neighbor element already exists you can use these examples to update it.  
-If the BGP neighbor element doesnt exist these examples will fail.  
+if the BGP neighbor element already exists it will be updated
+If the BGP neighbor element doesnt exist the request will fail because some required data are missing in the field value of the update message 
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' '110'
