@@ -1081,7 +1081,7 @@ If the BGP neighbor doesnt exist these examples will fail.
 ##### Modify several states 
 
 You can use a JSON file as shown above.  
-You can also use all the fields (`delete`, `replace` and `update` in the `SetRequest` message) with several paths in each the field. 
+You can also use all the fields (`delete`, `replace` and `update`) in the `SetRequest` message with several paths in each the field. 
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}' update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
