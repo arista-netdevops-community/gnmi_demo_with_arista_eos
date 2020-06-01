@@ -1013,6 +1013,9 @@ States modifications.
 
 ##### Create a new element or update an existing element
 
+These examples work even if the element doesnt exist. In that case, it will be created.    
+If it already exist then it will be updated.  
+
 ###### BGP group 
 
 ```
@@ -1038,7 +1041,7 @@ States modifications.
 
 ###### interface admin status
 
-"enabled" is a leaf defined in the openconfig-interfaces.yang file. It is a boolean. Its default value is true. It is the configured state of the interface.  
+"enabled" is a leaf defined in the openconfig-interfaces.yang file. It is a boolean. Its default value is true. It is the configured state of the interface. This leaf always exists.   
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'false'
@@ -1048,6 +1051,9 @@ States modifications.
 ```
 
 ###### BGP neighbor  
+
+if the BGP neighbor already exists you can use these examples.  
+If the BGP neighbor doesnt exist these examples will fail.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' '110'
