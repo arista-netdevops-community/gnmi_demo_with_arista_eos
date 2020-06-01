@@ -1276,7 +1276,7 @@ switch2(config)#
 </p>
 </details>
 
-###### Use the file [bgp.json](bgp.json) to create new elements or replace the existing ones 
+We can use the file [bgp.json](bgp.json) to create new elements or replace the existing ones 
 
 Several elements will be modified.  For each element: 
 - If the element doesnt exist, it will be created.    
