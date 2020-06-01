@@ -1,4 +1,9 @@
 {
+    "global": {
+        "config": {
+            "as": 65002
+        }
+    },
     "neighbors": {
         "neighbor": [
             {
