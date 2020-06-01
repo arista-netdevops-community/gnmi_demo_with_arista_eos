@@ -1051,10 +1051,9 @@ switch2#
 </p>
 </details>
 
-##### Create a new element or update/replace an existing element
+##### Create a new element or update/replace it if it already exists
 
 New elements could be new BGP neighbors, new BGP groups ....  
-
 
 ###### Create the BGP element or replace the existing one 
 
@@ -1172,8 +1171,8 @@ switch2#
 
 ##### update existing elements
 
-if the BGP neighbor element already exists it will be updated
-If the BGP neighbor element doesnt exist, the request will fail and it wont be created despite the path is valid (because some of the required data are missing in the field "value" of the "update message").  
+if the BGP neighbor element already exists it will be updated. 
+If the BGP neighbor element doesnt exist, the request will fail and it wont be created despite the field "path" is valid (because some of the required data are missing in the field "value" of the "update message").  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' '110'
