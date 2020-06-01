@@ -1018,8 +1018,42 @@ An update message is utilised to indicate changes to paths where a new value is 
 
 For both replace and update operations, if the path specified does not exist, the target MUST create the data tree element and populate it with the data in the Update message, provided the path is valid   
 
+##### update an existing element 
+
+"enabled" is a leaf defined in the openconfig-interfaces.yang file. It is a boolean. Its default value is true. It is the configured state of the interface. This leaf always exists.   
+  
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'false'
+```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config interfaces ethernet 4
+interface Ethernet4
+   shutdown
+switch2#
+```
+</p>
+</details>
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'true'
+```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config interfaces ethernet 4
+interface Ethernet4
+switch2#
+```
+</p>
+</details>
+
 ##### Create a new element or update/replace an existing element
 
+New elements could be new BGP neighbors, new BGP groups .... 
 These examples work even if the element doesnt exist. In that case, it will be created.    
 If it already exist then it will be updated.  
 
@@ -1121,38 +1155,8 @@ switch2#
 </p>
 </details>
 
-##### update an existing element 
 
-"enabled" is a leaf defined in the openconfig-interfaces.yang file. It is a boolean. Its default value is true. It is the configured state of the interface. This leaf always exists.   
-  
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'false'
-```
-<details><summary>click me to see the output</summary>
-<p>
-  
-```
-switch2#show running-config interfaces ethernet 4
-interface Ethernet4
-   shutdown
-switch2#
-```
-</p>
-</details>
-
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'true'
-```
-<details><summary>click me to see the output</summary>
-<p>
-  
-```
-switch2#show running-config interfaces ethernet 4
-interface Ethernet4
-switch2#
-```
-</p>
-</details>
+##### update existing elements  
 
 ###### BGP neighbor element 
 
@@ -1172,7 +1176,7 @@ If the BGP neighbor element doesnt exist these examples will fail.
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-group": "XYZ","peer-as": 143}}'
 ```
 
-##### delete an existing element  
+##### delete existing elements  
 
 The delete field in the SetRequest messaage has a set of paths which are to be removed from the data tree.  
 
