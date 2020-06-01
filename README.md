@@ -1034,6 +1034,7 @@ If it already exist then it will be updated.
 ```
 switch2#show running-config sec bgp
 router bgp 65002
+switch2#
 ```
 </p>
 </details>
@@ -1051,6 +1052,7 @@ switch2#show running-config sec bgp
 router bgp 65002
    neighbor XYZ peer group
    neighbor XYZ maximum-routes 12000
+switch2#
 ```
 </p>
 </details>
@@ -1071,6 +1073,7 @@ router bgp 65002
    neighbor 10.10.100.43 remote-as 123
    neighbor 10.10.100.43 send-community extended
    neighbor 10.10.100.43 maximum-routes 12000
+switch2#
 ```
 </p>
 </details>
@@ -1088,6 +1091,7 @@ router bgp 65002
    neighbor XYZ maximum-routes 12000
    neighbor 10.10.100.43 remote-as 123
    neighbor 10.10.100.43 maximum-routes 12000
+switch2#
 ```
 </p>
 </details>
@@ -1097,7 +1101,23 @@ router bgp 65002
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/bgp.json
 ```
-
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config sec bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ remote-as 65002
+   neighbor XYZ maximum-routes 12000
+   neighbor 10.10.10.154 peer group XYZ
+   neighbor 10.10.10.157 peer group XYZ
+   neighbor 10.10.100.43 remote-as 123
+   neighbor 10.10.100.43 maximum-routes 12000
+switch2#
+```
+</p>
+</details>
 ##### update an existing element 
 
 ###### interface admin status
