@@ -1007,7 +1007,16 @@ Retrieve a snapshot for a path
 
 #### Set RPC
 
-States modifications.  
+The Set RPC is used to modify states.   
+
+The SetRequest message uses the fields replace, update and replace: 
+- delete field: A set of paths which are to be removed from the data tree. 
+- replace field: A set of Update messages indicating elements of the data tree whose content is to be replaced.
+- update field: A set of Update messages indicating elements of the data tree whose content is to be updated.
+
+An update message is utilised to indicate changes to paths where a new value is required. The Update message contains two fields: path and value.  
+
+For both replace and update operations, if the path specified does not exist, the target MUST create the data tree element and populate it with the data in the Update message, provided the path is valid   
 
 ##### Create a new element or update an existing element
 
@@ -1017,28 +1026,76 @@ If it already exist then it will be updated.
 ###### BGP 
 
 ```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}'
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}'
 ```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config sec bgp
+router bgp 65002
+```
+</p>
+</details>
 
 ###### BGP group 
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}'
 ```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config sec bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ maximum-routes 12000
+```
+</p>
+</details>
 
 ###### BGP neighbor 
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
 ```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config sec bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ maximum-routes 12000
+   neighbor 10.10.100.43 remote-as 123
+   neighbor 10.10.100.43 send-community extended
+   neighbor 10.10.100.43 maximum-routes 12000
+```
+</p>
+</details>
+
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}, "neighbor-address": "10.10.100.43"}'
 ```
+<details><summary>click me to see the output</summary>
+<p>
+  
+```
+switch2#show running-config sec bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ maximum-routes 12000
+   neighbor 10.10.100.43 remote-as 123
+   neighbor 10.10.100.43 maximum-routes 12000
+```
+</p>
+</details>
 
 ###### BGP using the file [bgp.json](bgp.json)
 
 ```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/bgp.json
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/bgp.json
 ```
 
 ##### update an existing element 
@@ -1073,6 +1130,8 @@ If the BGP neighbor doesnt exist these examples will fail.
 ```
 
 ##### delete an existing element
+
+The `delete` field in the `SetRequest` message has the set of paths to be removed from the data tree.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group'
