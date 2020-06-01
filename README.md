@@ -1018,12 +1018,12 @@ An update message is utilised to indicate changes to paths where a new value is 
 
 For both replace and update operations, if the path specified does not exist, the target MUST create the data tree element and populate it with the data in the Update message, provided the path is valid   
 
-##### Create a new element or update an existing element
+##### Create a new element or update/replace an existing element
 
 These examples work even if the element doesnt exist. In that case, it will be created.    
 If it already exist then it will be updated.  
 
-###### BGP 
+###### Create the BGP element or replace the existing one 
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}'
@@ -1039,7 +1039,7 @@ switch2#
 </p>
 </details>
 
-###### BGP group 
+###### Creeate a new BGP group element or update the existing one
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}'
@@ -1057,7 +1057,7 @@ switch2#
 </p>
 </details>
 
-###### BGP neighbor 
+###### Create a new BGP neighbor element or update the existing one
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
@@ -1078,6 +1078,8 @@ switch2#
 </p>
 </details>
 
+###### Create a new BGP neighbor element or replace the existing one
+
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}, "neighbor-address": "10.10.100.43"}'
 ```
@@ -1096,7 +1098,7 @@ switch2#
 </p>
 </details>
 
-###### BGP using the file [bgp.json](bgp.json)
+###### Create new elements or replace the existing ones using the file [bgp.json](bgp.json)
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/bgp.json
@@ -1120,8 +1122,6 @@ switch2#
 </details>
 
 ##### update an existing element 
-
-###### interface admin status
 
 "enabled" is a leaf defined in the openconfig-interfaces.yang file. It is a boolean. Its default value is true. It is the configured state of the interface. This leaf always exists.   
   
@@ -1154,10 +1154,10 @@ switch2#
 </p>
 </details>
 
-###### BGP neighbor  
+###### BGP neighbor element 
 
-if the BGP neighbor already exists you can use these examples.  
-If the BGP neighbor doesnt exist these examples will fail.  
+if the BGP neighbor element already exists you can use these examples to update it.  
+If the BGP neighbor element doesnt exist these examples will fail.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' '110'
@@ -1172,17 +1172,28 @@ If the BGP neighbor doesnt exist these examples will fail.
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-group": "XYZ","peer-as": 143}}'
 ```
 
-##### delete an existing element
+##### delete an existing element  
+
+The delete field in the SetRequest messaage has a set of paths which are to be removed from the data tree.  
+
+This command will send a SetRequest message with 1 path in the delete field.  
 
 ```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group'
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
+```
+
+This command will send a SetRequest message with 2 paths in the delete field.  
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.157]/config/peer-group' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.154]/config/peer-group'
 ```
 
 ##### Modify several states 
 
 You can use a JSON file as shown above.  
 
-You can also use all the fields (`delete`, `replace` and `update`) in the `SetRequest` message with several paths in each the field. 
+You can also all the fields (delete, replace and update) in the SetRequest message, with several paths in each the field.  
+This command will send a `SetRequest` message with 2 paths in the field upate and one path in the field delete.   
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}' update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
