@@ -1013,7 +1013,7 @@ States modifications.
 
 ##### Create a new element or update an existing element
 
-###### BGP group
+###### BGP group 
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}'
@@ -1028,7 +1028,7 @@ States modifications.
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}, "neighbor-address": "10.10.100.43"}'
 ```
 
-###### using a JSON file
+###### BGP using the file [bgp.json](bgp.json)
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/bgp.json
