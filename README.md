@@ -422,7 +422,7 @@ gnmi
 
 ### interact with Arista devices using gNMI 
 
-Lets use the following RPC: capabilites, get, subscribe, update, replace, and delete.
+Lets use the following RPC: capabilites, get, subscribe, set. 
 
 #### Capabilities RPC
 
@@ -1197,17 +1197,18 @@ This command will send a SetRequest message with 1 path in the delete field.
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
 ```
 
+##### Modify several states 
+
+You can use a JSON file as shown above.  
+
+You can also all the fields (delete, replace and update) in the SetRequest message, with several paths in each the field.  
+
 This command will send a SetRequest message with 2 paths in the delete field.  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.157]/config/peer-group' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.154]/config/peer-group'
 ```
 
-##### Modify several states 
-
-You can use a JSON file as shown above.  
-
-You can also all the fields (delete, replace and update) in the SetRequest message, with several paths in each the field.  
 This command will send a `SetRequest` message with 2 paths in the field upate and one path in the field delete.   
 
 ```
