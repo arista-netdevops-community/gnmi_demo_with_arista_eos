@@ -1009,12 +1009,16 @@ Retrieve a snapshot for a path
 
 States modifications.  
 
-`replace`, `update`, `delete` fields. 
-
 ##### Create a new element or update an existing element
 
 These examples work even if the element doesnt exist. In that case, it will be created.    
 If it already exist then it will be updated.  
+
+###### BGP 
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}'
+```
 
 ###### BGP group 
 
@@ -1074,4 +1078,11 @@ If the BGP neighbor doesnt exist these examples will fail.
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group'
 ```
 
+##### Modify several states 
 
+You can use a JSON file as shown above.  
+You can also use all the fields (`delete`, `replace` and `update` in the `SetRequest` message) with several paths in each the field. 
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}' update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
+```
