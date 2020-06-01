@@ -1010,13 +1010,13 @@ Retrieve a snapshot for a path
 The Set RPC is used to modify states.   
 
 The SetRequest message uses the fields replace, update and replace: 
-- delete field: A set of paths which are to be removed from the data tree. 
-- replace field: A set of Update messages indicating elements of the data tree whose content is to be replaced.
-- update field: A set of Update messages indicating elements of the data tree whose content is to be updated.
+- "delete" field: A set of paths which are to be removed from the data tree. 
+- "replace" field: A set of "Update messages" indicating elements of the data tree whose content is to be replaced.
+- "update" field: A set of "Update messages" indicating elements of the data tree whose content is to be updated.
 
-An update message is utilised to indicate changes to paths where a new value is required. The Update message contains two fields: path and value.  
+An "Update message" is utilised to indicate changes to paths where a new value is required. The Update message contains two fields: path and value.  
 
-For both replace and update operations, if the path specified does not exist, the target MUST create the data tree element and populate it with the data in the Update message, provided the path is valid   
+For both "replace" and "update" operations, if the path specified does not exist, the target MUST create the data tree element and populate it with the data in the Update message, provided the path and data are valid   
 
 ##### update an existing element 
 
@@ -1170,10 +1170,10 @@ switch2#
 </p>
 </details>
 
-##### update existing elements BGP neighbor element 
+##### update existing elements
 
 if the BGP neighbor element already exists it will be updated
-If the BGP neighbor element doesnt exist the request will fail because some required data are missing in the field value of the update message 
+If the BGP neighbor element doesnt exist, the request will fail and it wont be created despite the path is valid (because some of the required data are missing in the field "value" of the "update message").  
 
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' '110'
