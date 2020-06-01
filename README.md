@@ -62,7 +62,7 @@ pyang==2.2.1
 
 ## yang modules validation
 
-Example: let's validate the modules openconfig-bgp.yang and openconfig-interfaces.yang from openconfig github repository
+Example: let's validate the modules "openconfig-bgp.yang" and "openconfig-interfaces.yang" from [openconfig github repository](https://github.com/openconfig/public.git)
 
 
 ### clone the openconfig repository
@@ -390,7 +390,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 ```
 # gNMI (gRPC Network Management Interface)
 
-We will use [this gnmi command-line client](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi) and the following RPC: capabilites, get, subscribe, update, replace, and delete.
+We will use [this gnmi command-line client](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi) and the following RPC: capabilites, get, subscribe, set. 
 
 ## requirements on Arista devices 
 
@@ -1009,7 +1009,7 @@ Retrieve a snapshot for a path
 
 The Set RPC is used to modify states.   
 
-The SetRequest message uses the fields replace, update and replace: 
+The SetRequest message uses the following fields: 
 - "delete" field: A set of paths which are to be removed from the data tree. 
 - "replace" field: A set of "Update messages" indicating elements of the data tree whose content is to be replaced.
 - "update" field: A set of "Update messages" indicating elements of the data tree whose content is to be updated.
@@ -1025,7 +1025,7 @@ For both "replace" and "update" operations, if the path specified does not exist
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'false'
 ```
-<details><summary>click me to see the output</summary>
+<details><summary>click me to see the new EOS configuration</summary>
 <p>
   
 ```
@@ -1040,7 +1040,7 @@ switch2#
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet4]/config/enabled' 'true'
 ```
-<details><summary>click me to see the output</summary>
+<details><summary>click me to see the new EOS configuration</summary>
 <p>
   
 ```
@@ -1063,7 +1063,7 @@ If it already exist then it will be replaced.
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}'
 ```
-<details><summary>click me to see the output</summary>
+<details><summary>click me to see the new EOS configuration</summary>
 <p>
   
 ```
@@ -1074,7 +1074,7 @@ switch2#
 </p>
 </details>
 
-###### Creeate a new BGP group element or update the existing one
+###### Create a new BGP group element or update the existing one
 
 If the element doesnt exist, it will be created.    
 If it already exist then it will be updated.  
@@ -1082,7 +1082,7 @@ If it already exist then it will be updated.
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}'
 ```
-<details><summary>click me to see the output</summary>
+<details><summary>click me to see the new EOS configuration</summary>
 <p>
   
 ```
@@ -1103,7 +1103,7 @@ If it already exist then it will be updated.
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
 ```
-<details><summary>click me to see the output</summary>
+<details><summary>click me to see the new EOS configuration</summary>
 <p>
   
 ```
@@ -1127,7 +1127,7 @@ If it already exist then it will be replaced.
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}, "neighbor-address": "10.10.100.43"}'
 ```
-<details><summary>click me to see the output</summary>
+<details><summary>click me to see the new EOS configuration</summary>
 <p>
   
 ```
@@ -1138,6 +1138,140 @@ router bgp 65002
    neighbor 10.10.100.43 remote-as 123
    neighbor 10.10.100.43 maximum-routes 12000
 switch2#
+```
+</p>
+</details>
+
+
+##### update existing elements
+
+if the BGP neighbor element already exists it will be updated. 
+If the BGP neighbor element doesnt exist, the request will fail and it wont be created despite the field "path" is valid (because some of the required data are missing in the field "value" of the "update message").  
+
+These 2 commands are equivalent: 
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-as' '110'
+```
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"peer-as": 110}}'
+```
+<details><summary>click me to see the new EOS configuration</summary>
+<p>
+  
+```
+switch2(config)#show  running-config section bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ maximum-routes 12000
+   neighbor 10.10.100.43 remote-as 110
+   neighbor 10.10.100.43 maximum-routes 12000
+switch2(config)#
+```
+</p>
+</details>
+
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group' 'XYZ'
+```
+<details><summary>click me to see the new EOS configuration</summary>
+<p>
+  
+```
+switch2(config)#show  running-config section bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ maximum-routes 12000
+   neighbor 10.10.100.43 peer group XYZ
+   neighbor 10.10.100.43 remote-as 110
+switch2(config)#
+```
+</p>
+</details>
+
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"peer-group": "XYZ","peer-as": 143}}'
+```
+<details><summary>click me to see the new EOS configuration</summary>
+<p>
+  
+
+```
+switch2(config)#show  running-config section bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ maximum-routes 12000
+   neighbor 10.10.100.43 peer group XYZ
+   neighbor 10.10.100.43 remote-as 143
+switch2(config)#
+```
+</p>
+</details>
+
+##### delete an existing element  
+
+The delete field in the SetRequest messaage has a set of paths which are to be removed from the data tree.  
+
+This command will send a SetRequest message with 1 path in the delete field.  
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
+```
+<details><summary>click me to see the new EOS configuration</summary>
+<p>
+  
+```
+switch2(config)#show  running-config section bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ maximum-routes 12000
+switch2(config)#
+```
+</p>
+</details>
+
+
+##### Modify several states 
+
+We can use all the fields (delete, replace and update) in the SetRequest message, with several paths in each the field.  
+
+This command will send a `SetRequest` message with 3 paths in the field upate and 1 path in the field delete.   
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}' update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}' update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.1]' '{"config": {"neighbor-address":"10.10.10.1", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
+```
+<details><summary>click me to see the new EOS configuration</summary>
+<p>
+  
+```
+switch2(config)#show  running-config section bgp
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ maximum-routes 12000
+   neighbor 10.10.10.1 remote-as 123
+   neighbor 10.10.10.1 send-community extended
+   neighbor 10.10.10.1 maximum-routes 12000
+switch2(config)#
+```
+</p>
+</details>
+
+
+This command will send a SetRequest message with 2 paths in the delete field.  
+
+```
+./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.1]/config/send-community' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]'
+```
+<details><summary>click me to see the new EOS configuration</summary>
+<p>
+  
+```
+switch2(config)#show  running-config section bgp
+router bgp 65002
+   neighbor 10.10.10.1 remote-as 123
+   neighbor 10.10.10.1 maximum-routes 12000
+switch2(config)#
 ```
 </p>
 </details>
@@ -1151,67 +1285,21 @@ Several elements will be modified.  For each element:
 ```
 ./gnmi -addr 10.83.28.203:6030 -username arista -password arista replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/bgp.json
 ```
-<details><summary>click me to see the output</summary>
+<details><summary>click me to see the new EOS configuration</summary>
 <p>
   
 ```
-switch2#show running-config sec bgp
+switch2(config)#show  running-config section bgp
 router bgp 65002
    neighbor XYZ peer group
    neighbor XYZ remote-as 65002
    neighbor XYZ maximum-routes 12000
+   neighbor 10.10.10.1 remote-as 123
+   neighbor 10.10.10.1 maximum-routes 12000
    neighbor 10.10.10.154 peer group XYZ
    neighbor 10.10.10.157 peer group XYZ
-   neighbor 10.10.100.43 remote-as 123
-   neighbor 10.10.100.43 maximum-routes 12000
-switch2#
+switch2(config)#
 ```
 </p>
 </details>
 
-##### update existing elements
-
-if the BGP neighbor element already exists it will be updated. 
-If the BGP neighbor element doesnt exist, the request will fail and it wont be created despite the field "path" is valid (because some of the required data are missing in the field "value" of the "update message").  
-
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' '110'
-```
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-as": 110}}'
-```
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group' 'XYZ'
-```
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-group": "XYZ","peer-as": 143}}'
-```
-
-##### delete an existing element  
-
-The delete field in the SetRequest messaage has a set of paths which are to be removed from the data tree.  
-
-This command will send a SetRequest message with 1 path in the delete field.  
-
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
-```
-
-##### Modify several states 
-
-You can use a JSON file as shown above.  
-
-You can also all the fields (delete, replace and update) in the SetRequest message, with several paths in each the field.  
-
-
-This command will send a SetRequest message with 2 paths in the delete field.  
-
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.157]/config/peer-group' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.154]/config/peer-group'
-```
-
-This command will send a `SetRequest` message with 2 paths in the field upate and one path in the field delete.   
-
-```
-./gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' '{"global": {"config": {"as": 65002}}}' update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ"}}' delete '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]'
-```
