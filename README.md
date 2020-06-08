@@ -11,7 +11,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;[Generate a tree representation of YANG modules for quick visualization](#generate-a-tree-representation-of-yang-modules-for-quick-visualization)   
 [pyangbind](#pyangbind)   
 &nbsp;&nbsp;&nbsp;&nbsp;[About pyangbind](#about-pyangbind)   
-&nbsp;&nbsp;&nbsp;&nbsp;[pyang installation](#pyang-installation)   
+&nbsp;&nbsp;&nbsp;&nbsp;[pyangbind installation](#pyangbind-installation)   
 &nbsp;&nbsp;&nbsp;&nbsp;[converts a YANG module into a Python module](#converts-a-yang-module-into-a-python-module)        
 &nbsp;&nbsp;&nbsp;&nbsp;[Use the python module to generate data](#use-the-python-module-to-generate-data)   
 [gNMI (gRPC Network Management Interface)](#gnmi-grpc-network-management-interface)   
@@ -298,13 +298,13 @@ module: openconfig-interfaces
 pyangbind is a pyang plugin.  
 It generates Python classes from a YANG module: It converts  YANG module into a Python module, such that Python can be used to generate data which conforms with the data model defined in YANG.
 
-## pyang installation
+## pyangbind installation
 
 ```
 python -V              
 Python 3.7.7
 ```
-pyang installation from pypi 
+pyangbind installation from pypi 
 ```
 $ pip install pyangbind
 ```
