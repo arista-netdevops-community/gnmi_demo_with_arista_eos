@@ -106,7 +106,7 @@ ls *.yin
 ## Generate a tree representation of YANG modules for quick visualization
 
 ```
-yang_modules pyang -f tree openconfig-interfaces.yang                                        
+pyang -f tree openconfig-interfaces.yang                                        
 ```
 <details><summary>click me to see the output</summary>
 <p>
@@ -203,7 +203,7 @@ module: openconfig-interfaces
 
 
 ```
-yang_modules pyang openconfig-interfaces.yang -f tree --tree-path=/interfaces/interface/state       
+pyang openconfig-interfaces.yang -f tree --tree-path=/interfaces/interface/state       
 ```
 <details><summary>click me to see the output</summary>
 <p>
@@ -248,7 +248,7 @@ module: openconfig-interfaces
 </details>
 
 ```
-yang_modules pyang openconfig-interfaces.yang -f tree  --tree-depth=4  
+pyang openconfig-interfaces.yang -f tree  --tree-depth=4  
 ```
 <details><summary>click me to see the output</summary>
 <p>
