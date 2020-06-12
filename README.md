@@ -21,7 +21,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Capabilities RPC](#capabilities-rpc)    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Subscribe RPC](#subscribe-rpc)    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Get RPC](#get-rpc)    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Set RPC](#set-rpc)    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Set RPC](#set-rpc)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[OpenConfig paths and EOS native paths](#openconfig-paths-and-eos-native-paths)  
+
 
 # About this repository 
 
@@ -397,10 +399,18 @@ We will use [this gnmi command-line client](https://github.com/aristanetworks/go
 ```
 username arista secret 0 arista
 ip access-list GNMI
-   10 permit tcp any any eq gnmi
+  10 permit tcp any any eq gnmi
 management api gnmi
-   transport grpc def
-     ip access-group GNMI
+  transport grpc def
+    ip access-group GNMI
+  provider eos-native
+```
+
+`provider eos-native` is required to serve gNMI subscription/get requests with EOS native paths.  
+So, using the above configuration, a gNMI client can subscribes to both OpenConfig paths and native paths.
+
+```
+show management api gnmi 
 ```
 
 ## install the gNMI command-line client 
@@ -1302,4 +1312,29 @@ switch2(config)#
 ```
 </p>
 </details>
+
+#### OpenConfig paths and EOS native paths 
+
+The `origin` field can be used in a `SetRequest`, `GetRequest`, `SubscribeRequest` messages.  
+This field is optionnal. It is a string. Its default value is `openconfig`  
+The path specified within the message is uniquely identified by the tuple of <origin, path>.  
+This field is used to disambiguate the path.  
+The origin is used to indicate which organization defined the path.  
+
+In addition to accepting OpenConfig paths in gNMI get/subscribe requests, Arista EOS devices accept also EOS native paths (e.g. Sysdb/Smash/kernel paths) when gNMI requests contains an origin of `eos_native`. 
+
+Examples: 
+```
+./gnmi -addr 10.83.28.125:6030 -username arista -password arista subscribe origin=openconfig '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state'
+```
+```
+./gnmi -addr 10.83.28.125:6030 -username arista -password arista subscribe origin=eos_native '/Sysdb/routing/bgp/export/'
+```
+```
+./gnmi -addr 10.83.28.125:6030 -username arista -password arista subscribe origin=eos_native '/Smash/routing/bgp'       
+```
+```
+./gnmi -addr 10.83.28.125:6030 -username arista -password arista subscribe origin=eos_native '/Kernel/proc/cpu/'
+```
+
 
