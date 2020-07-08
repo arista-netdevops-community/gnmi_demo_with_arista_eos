@@ -351,6 +351,13 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> oc.bgp.neighbors.neighbor["192.168.1.2"].config.peer_group="OC"
 >>> oc.bgp.neighbors.neighbor["192.168.1.22"].config.peer_as="120"
 >>> oc.bgp.neighbors.neighbor["192.168.1.22"].config.peer_group="OC"
+```
+```
+>>> print(oc.bgp.neighbors.neighbor["192.168.1.22"].config.peer_as)
+120
+```
+
+```
 >>> oc.get(filter=True)
 {'bgp': {'neighbors': {'neighbor': OrderedDict([('192.168.1.2', {'neighbor-address': '192.168.1.2', 'config': {'peer-group': 'OC', 'peer-as': 110}}), ('192.168.1.22', {'neighbor-address': '192.168.1.22', 'config': {'peer-group': 'OC', 'peer-as': 120}})])}, 'peer-groups': {'peer-group': OrderedDict([('OC', {'peer-group-name': 'OC', 'config': {'local-as': 104}})])}}}
 >>> dumps(oc.get(filter=True))
@@ -387,6 +394,102 @@ Type "help", "copyright", "credits" or "license" for more information.
             }
         }
     }
+}
+>>> 
+```
+Default format 
+```
+>>> import pyangbind.lib.pybindJSON as pybindJSON
+>>> print(pybindJSON.dumps(oc))
+{
+    "bgp": {
+        "neighbors": {
+            "neighbor": {
+                "192.168.1.2": {
+                    "neighbor-address": "192.168.1.2",
+                    "config": {
+                        "peer-group": "OC",
+                        "peer-as": 110
+                    }
+                },
+                "192.168.1.22": {
+                    "neighbor-address": "192.168.1.22",
+                    "config": {
+                        "peer-group": "OC",
+                        "peer-as": 120
+                    }
+                }
+            }
+        },
+        "peer-groups": {
+            "peer-group": {
+                "OC": {
+                    "peer-group-name": "OC",
+                    "config": {
+                        "local-as": 104
+                    }
+                }
+            }
+        }
+    }
+}
+>>> 
+```
+[rfc 7951](https://tools.ietf.org/html/rfc7951) format 
+```
+>>> print(pybindJSON.dumps(oc, mode="ietf"))
+{
+    "openconfig-bgp:bgp": {
+        "neighbors": {
+            "neighbor": [
+                {
+                    "neighbor-address": "192.168.1.2",
+                    "config": {
+                        "peer-group": "OC",
+                        "peer-as": 110
+                    }
+                },
+                {
+                    "neighbor-address": "192.168.1.22",
+                    "config": {
+                        "peer-group": "OC",
+                        "peer-as": 120
+                    }
+                }
+            ]
+        },
+        "peer-groups": {
+            "peer-group": [
+                {
+                    "peer-group-name": "OC",
+                    "config": {
+                        "local-as": 104
+                    }
+                }
+            ]
+        }
+    }
+}
+>>> 
+
+>>> print(pybindJSON.dumps(oc.bgp.neighbors, mode="ietf"))
+{
+    "openconfig-bgp:neighbor": [
+        {
+            "neighbor-address": "192.168.1.2",
+            "config": {
+                "peer-group": "OC",
+                "peer-as": 110
+            }
+        },
+        {
+            "neighbor-address": "192.168.1.22",
+            "config": {
+                "peer-group": "OC",
+                "peer-as": 120
+            }
+        }
+    ]
 }
 >>> 
 ```
