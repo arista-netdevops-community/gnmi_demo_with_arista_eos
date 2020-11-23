@@ -671,6 +671,8 @@ SupportedEncoding: ASCII
 
 #### Subscribe RPC
 
+##### ON_CHANGE mode 
+
 Request to the target to stream values for a path
 
 ```
@@ -768,6 +770,13 @@ Request to the target to stream values for a path
 ```
 </p>
 </details>
+
+
+##### SAMPLE mode
+
+```
+gnmi -addr 0.83.28.203:6030 -username arista -password arista -sample_interval 5s -stream_mode sample subscribe '/network-instances/network-instance/protocols/protocol/bgp/'
+```
 
 #### Get RPC
 
