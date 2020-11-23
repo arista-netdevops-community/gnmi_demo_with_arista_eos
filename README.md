@@ -23,6 +23,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Get RPC](#get-rpc)    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Set RPC](#set-rpc)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[OpenConfig paths and EOS native paths](#openconfig-paths-and-eos-native-paths)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[device configuration end to end demo](#device-configuration-end-to-end-demo)
 
 
 # About this repository 
@@ -670,6 +671,8 @@ SupportedEncoding: ASCII
 
 #### Subscribe RPC
 
+##### ON_CHANGE mode 
+
 Request to the target to stream values for a path
 
 ```
@@ -767,6 +770,13 @@ Request to the target to stream values for a path
 ```
 </p>
 </details>
+
+
+##### SAMPLE mode
+
+```
+gnmi -addr 0.83.28.203:6030 -username arista -password arista -sample_interval 5s -stream_mode sample subscribe '/network-instances/network-instance/protocols/protocol/bgp/'
+```
 
 #### Get RPC
 
@@ -1389,6 +1399,8 @@ switch2(config)#
 </p>
 </details>
 
+##### Use a file to create new elements or replace existing ones 
+
 We can use the file [bgp.json](bgp.json) to create new elements or replace the existing ones 
 
 Several elements will be modified.  For each element: 
@@ -1440,4 +1452,106 @@ Examples:
 ./gnmi -addr 10.83.28.125:6030 -username arista -password arista subscribe origin=eos_native '/Kernel/proc/cpu/'
 ```
 
+#### device configuration end to end demo 
 
+We will use YANG files and pyangbind to generate an OpenConfig configuration file. 
+We will then use GNMI (SET gRPC) to configure the device with that OpenConfig configuration file. 
+
+##### Requirements: 
+- Install pyang
+  - `pip install pyang`
+- Install pyangbind 
+  - `pip install pyangbind`
+- Download yang files 
+  - `git clone https://github.com/openconfig/public.git`
+- copy all the yang files from Openconfig into one directory (see above repository for detailled instructions)
+- move to that directory and run this command to convert the YANG module openconfig-bgp.yang into the Python module oc_bgp.py
+  - `pyang --plugindir $VIRTUAL_ENV/lib/python3.7/site-packages/pyangbind/plugin -f pybind -o oc_bgp.py openconfig-bgp.yang`
+
+##### Instructions: 
+
+From the directory that has the python module oc_bgp.py, execute the following python code in order to generate an OC configuration
+
+```
+from oc_bgp import openconfig_bgp
+import pyangbind.lib.pybindJSON as pybindJSON
+
+oc=openconfig_bgp()
+
+oc.bgp.global_.config.as_="65002"
+
+oc.bgp.peer_groups.peer_group.add("XYZ")
+oc.bgp.peer_groups.peer_group["XYZ"].config.peer_group_name="XYZ"
+oc.bgp.peer_groups.peer_group["XYZ"].config.peer_as=65002
+
+oc.bgp.neighbors.neighbor.add("10.10.10.154")
+oc.bgp.neighbors.neighbor["10.10.10.154"].config.neighbor_address="10.10.10.154"
+oc.bgp.neighbors.neighbor["10.10.10.154"].config.peer_group="XYZ"
+oc.bgp.neighbors.neighbor["10.10.10.154"].config.enabled=True
+
+oc.bgp.neighbors.neighbor.add("10.10.10.157")
+oc.bgp.neighbors.neighbor["10.10.10.157"].config.neighbor_address="10.10.10.157"
+oc.bgp.neighbors.neighbor["10.10.10.157"].config.peer_group="XYZ"
+oc.bgp.neighbors.neighbor["10.10.10.157"].config.enabled=True
+```
+Print the generated configuration 
+```
+print(pybindJSON.dumps(oc.bgp, mode="ietf"))
+{
+    "openconfig-bgp:global": {
+        "config": {
+            "as": 65002
+        }
+    },
+    "openconfig-bgp:neighbors": {
+        "neighbor": [
+            {
+                "neighbor-address": "10.10.10.154",
+                "config": {
+                    "peer-group": "XYZ",
+                    "neighbor-address": "10.10.10.154"
+                }
+            },
+            {
+                "neighbor-address": "10.10.10.157",
+                "config": {
+                    "peer-group": "XYZ",
+                    "neighbor-address": "10.10.10.157"
+                }
+            }
+        ]
+    },
+    "openconfig-bgp:peer-groups": {
+        "peer-group": [
+            {
+                "peer-group-name": "XYZ",
+                "config": {
+                    "peer-group-name": "XYZ",
+                    "peer-as": 65002
+                }
+            }
+        ]
+    }
+}
+```
+Verify the current BGP configuration on a device
+```
+SPINE1(config)#sh running-config section bgp
+SPINE1(config)#
+```
+Use the gRPC SET to load the generated OC configuration file to that device 
+```
+`./gnmi -addr device_IP:gnmi_port -username username -password password replace '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' /Users/ksator/Projects/gnmi/generated_file.json`
+```
+Verify the new BGP configuration on that device
+```
+SPINE1#sh running-config section bgp 
+router bgp 65002
+   neighbor XYZ peer group
+   neighbor XYZ remote-as 65002
+   neighbor XYZ maximum-routes 12000
+   neighbor 10.10.10.154 peer group XYZ
+   neighbor 10.10.10.157 peer group XYZ
+SPINE1#
+```
+et voila :-) 
