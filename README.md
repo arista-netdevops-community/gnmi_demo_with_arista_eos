@@ -23,8 +23,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Get RPC](#get-rpc)    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Set RPC](#set-rpc)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[OpenConfig paths and EOS native paths](#openconfig-paths-and-eos-native-paths)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[device configuration end to end demo](device-configuration-end-to-end-demo)
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[device configuration end to end demo](#device-configuration-end-to-end-demo)
 
 
 # About this repository 
@@ -1449,7 +1448,7 @@ Examples:
 We will use YANG files and pyangbind to generate an OpenConfig configuration file. 
 We will then use GNMI (SET gRPC) to configure the device with that OpenConfig configuration file. 
 
-Instructions: 
+##### Requirements: 
 - Install pyang
   - `pip install pyang`
 - Install pyangbind 
@@ -1459,7 +1458,10 @@ Instructions:
 - copy all the yang files from Openconfig into one directory (see above repository for detailled instructions)
 - move to that directory and run this command to convert the YANG module openconfig-bgp.yang into the Python module oc_bgp.py
   - `pyang --plugindir $VIRTUAL_ENV/lib/python3.7/site-packages/pyangbind/plugin -f pybind -o oc_bgp.py openconfig-bgp.yang`
-- From the directory that has the python module oc_bgp.py, execute the following python code in order to generate an OC configuration
+
+##### Instructions: 
+
+From the directory that has the python module oc_bgp.py, execute the following python code in order to generate an OC configuration
 
 ```
 from oc_bgp import openconfig_bgp
@@ -1483,6 +1485,7 @@ oc.bgp.neighbors.neighbor["10.10.10.157"].config.neighbor_address="10.10.10.157"
 oc.bgp.neighbors.neighbor["10.10.10.157"].config.peer_group="XYZ"
 oc.bgp.neighbors.neighbor["10.10.10.157"].config.enabled=True
 ```
+Print the generated configuration 
 ```
 print(pybindJSON.dumps(oc.bgp, mode="ietf"))
 {
