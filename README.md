@@ -1,5 +1,3 @@
-![GitHub](https://img.shields.io/github/license/ksator/gnmi_demo_with_arista_eos)
-
 # Table of content
 
 [About this repository](#about-this-repository)   
@@ -32,6 +30,7 @@ We will use pyang, pyangbind, and gNMI.
 
 We will interact with Arista EOS devices using gNMI.   
 We will use a gnmi command-line client and the following RPC: capabilites, get, subscribe, set. 
+
 # Data models on Arista EOS
 
 They are published on this repository  https://github.com/aristanetworks/yang 
@@ -502,12 +501,11 @@ We will use [this gnmi command-line client](https://github.com/aristanetworks/go
 
 ```
 username arista secret 0 arista
-ip access-list GNMI
-  10 permit tcp any any eq gnmi
+
 management api gnmi
-  transport grpc def
-    ip access-group GNMI
-  provider eos-native
+   transport grpc def
+      vrf MGMT
+   provider eos-native
 ```
 
 `provider eos-native` is required to serve gNMI subscription/get requests with EOS native paths.  
